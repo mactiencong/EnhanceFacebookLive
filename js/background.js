@@ -1,4 +1,4 @@
-let isEnable = true
+let isEnable = false
 
 function start(){
   chrome.browserAction.onClicked.addListener(function(tab) {
@@ -25,7 +25,7 @@ function disable(){
   isEnable = false
   stopBlocking()
   chrome.webNavigation.onCompleted.removeListener(startBlocking)
-  chrome.webNavigation.onBeforeNavigate.addListener(stopBlocking)
+  chrome.webNavigation.onBeforeNavigate.removeListener(stopBlocking)
   clearBlockTimeout()
 }
 
@@ -67,7 +67,7 @@ function startBlocking(){
       ["blocking"]
     )
     clearBlockTimeout()
-  }, 120000) // start block after 120s (120000) for loading image, css ...
+  }, 3000) // start block after 120s (120000) for loading image, css ...
 }
 
 function stopBlocking(){
@@ -97,4 +97,4 @@ function blockListener(details) {
 }
 
 start()
-enable()
+disable()
